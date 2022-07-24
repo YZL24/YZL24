@@ -1,6 +1,7 @@
 name: Formatting python code
 on:
   push:
+    branches: [ master, main ]
     paths:
       - '**.py'
   pull_request_target:
@@ -42,7 +43,7 @@ jobs:
           author: GitHub Actions <41898282+github-actions[bot]@users.noreply.github.com>
           commit-message: "style: format python code (pep8)"
           title: "style: format python code (pep8)"
-          body: Reformated as pep8 style.
+          body: Reformat to pep8 style.
           branch: code-style
 
       - name: Commit licensed files
