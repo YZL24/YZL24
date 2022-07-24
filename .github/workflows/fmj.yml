@@ -1,9 +1,9 @@
-name: Formatting java code
+name: Check Java Code Style
 on:
   push:
     paths:
       - '**.java'
-    branches: [ main ]
+    branches: [ master, main ]
   pull_request_target:
     paths:
       - '**.py'
@@ -26,15 +26,18 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - uses: axel-op/googlejavaformat-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: "--replace"
+      # - uses: axel-op/googlejavaformat-action@v3
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     skipCommit: true
+      #     args: "--replace"
 
-      - name: Check for modified files
-        id: git-check
-        run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
+      - name: Jetbrains style
+        uses: findologic/intellij-format-action@v1
+        with:
+          include-glob: '*.kt,*.java'
+          path: .
 
       - name: Create pull request
         if: github.event_name == 'push'
@@ -46,7 +49,7 @@ jobs:
           body: Reformat to google style.
           branch: code-style
 
-      - name: Commit licensed files
+      - name: Commit formatted files
         if: github.event_name == 'pull_request_target'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
