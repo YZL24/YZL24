@@ -34,7 +34,7 @@ jobs:
       #     args: "--replace"
 
       - name: Jetbrains style
-        uses: findologic/intellij-format-action@v1
+        uses: findologic/intellij-format-action@1.0.0
         with:
           include-glob: '*.kt,*.java'
           path: .
