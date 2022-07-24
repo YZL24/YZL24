@@ -1,6 +1,5 @@
-public class    A
-{
- public static void main(String[] args){
- // pass
- }
+public class A {
+  public static void main(String[] args) {
+    // pass
+  }
 }
