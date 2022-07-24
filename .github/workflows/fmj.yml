@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - '**.java'
-    branches: [ master, main ]
+    branches: [ main ]
   pull_request_target:
     paths:
       - '**.py'
