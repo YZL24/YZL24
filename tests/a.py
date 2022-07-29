@@ -18,3 +18,5 @@ def h():
 
 def b():
     pass
+def c():
+ ...
