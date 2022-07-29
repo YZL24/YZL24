@@ -11,7 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+
+    - name: Checkout commit
+      if: github.event_name == 'push'
+      uses: actions/checkout@v3
+
+    - name: Checkout pull request
+      if: github.event_name == 'pull_request_target'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
+        ref: ${{ github.event.pull_request.head.ref }}
+
 
     - name: Check license headers
       uses: apache/skywalking-eyes@v0.3.0
