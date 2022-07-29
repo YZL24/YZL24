@@ -13,6 +13,7 @@
 # limitations under the License.
 
 def h():
- ...
+    ...
+
 
 def b(): pass
