@@ -30,12 +30,25 @@ jobs:
         default_author: github_actions
         message: "chore: add license header(s)"
 
+    - name: Create pull request
+      if: github.event_name == 'push'
+      uses: peter-evans/create-pull-request@v3
+      with:
+        author: GitHub Actions <41898282+github-actions[bot]@users.noreply.github.com>
+        commit-message: "chore: add license header(s)"
+        title: "chore: add license header(s)"
+        body: Add missing license header(s) in source and test code.
+        branch: add-license
+
+    # only check code format for PR, single reformatting jobs don't deserve a PR
+
     - name: Check pep8 format
+      if: github.event_name == 'pull_request_target'
       uses: peter-evans/autopep8@v1
       with:
         args: --recursive --in-place --aggressive --aggressive .
 
-    - name: Commit licensed files
+    - name: Commit formatted code
       if: github.event_name == 'pull_request_target'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -43,16 +56,3 @@ jobs:
       with:
         default_author: github_actions
         message: "style: format python code (pep8)"
-
-    - name: Create pull request
-      if: github.event_name == 'push'
-      uses: peter-evans/create-pull-request@v3
-      with:
-        author: GitHub Actions <41898282+github-actions[bot]@users.noreply.github.com>
-        commit-message: "chore: restyle code (license / pep8)"
-        title: "chore: restyle code (license / pep8)"
-        body: |
-          Add missing license header(s) in source and test code.
-          (and / or)
-          Format python code to pep8 style.
-        branch: code-style
