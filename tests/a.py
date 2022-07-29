@@ -1,5 +1,4 @@
 def h():
  ...
 
-def b():
-    pass
+def b(): pass
